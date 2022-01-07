@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import Header from './components/Header';
 import Tasks from './components/Tasks';
 import AddTask from './components/AddTask';
 
@@ -47,7 +48,7 @@ const App = () => {
 	};
 
 	const handleTaskDeletion = (taskId) => {
-		const newTasks = tasks.filter((task) => task.id != taskId);
+		const newTasks = tasks.filter((task) => task.id !== taskId);
 
 		setTasks(newTasks);
 	};
