@@ -51,9 +51,13 @@ const App = () => {
 		setTasks(newTasks);
 	};
 
+	// const handleTaskInfo = (taskInfo) => {
+	// 	//Task info...
+	// };
+
 	return (
 		<>
-			<div className="container">
+			<div className='container'>
 				<Header />
 				<AddTask handleTaskAddition={handleTaskAddition} />
 				<Tasks
