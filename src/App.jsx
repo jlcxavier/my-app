@@ -1,12 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, setState } from 'react';
+import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Tasks from './components/Tasks';
 import AddTask from './components/AddTask';
 import Header from './components/Header';
+import TaskDetails from './components/TaskDetails';
 
 import './App.css';
+
+// class App extends React.Component {
+// 	constructor() {
+// 		super();
+
+// 		this.state = {
+// 			message: 'hello world',
+// 		};
+// 	}
+
+// 	componentDidMount() {
+// 		console.log('foi renderizado pela primeira vez');
+// 	}
+
+// 	handleMessageChangeClick() {
+// 		this.setState({ message: 'hellooo' });
+// 	}
+
+// 	render() {
+// 		return (
+// 			<>
+// 				<h1>{this.state.message}</h1>
+// 				<button onClick={this.handleMessageChangeClick.bind(this)}>
+// 					mudar mensagem
+// 				</button>
+// 			</>
+// 		);
+// 	}
+// }
+
+// export default App;
 
 const App = () => {
 	const [tasks, setTasks] = useState([
@@ -21,6 +54,18 @@ const App = () => {
 			completed: false,
 		},
 	]);
+
+	useEffect(() => {
+		const fetchTasks = async () => {
+			const { data } = await axios.get(
+				'https://jsonplaceholder.cypress.io/todos?_limit=10'
+			);
+
+			setTasks(data);
+		};
+
+		fetchTasks();
+	});
 
 	const handleTaskClick = (taskId) => {
 		const newTasks = tasks.map((task) => {
@@ -52,10 +97,6 @@ const App = () => {
 		setTasks(newTasks);
 	};
 
-	// const handleTaskInfo = (taskInfo) => {
-	// 	//Task info...
-	// };
-
 	return (
 		<Router>
 			<div className="container">
@@ -74,6 +115,7 @@ const App = () => {
 						</>
 					)}
 				/>
+				<Route path="/:taskTitle" exact component={TaskDetails} />
 			</div>
 		</Router>
 	);
